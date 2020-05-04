@@ -1,54 +1,85 @@
+import bluetooth
 import serial
-import matplotlib
-matplotlib.use('TkAgg')
-import matplotlib.pyplot as plt
-import numpy as np
 
 ser = serial.Serial ("/dev/serial0", baudrate=230400)
 
-def init():
-    r = np.arange(1, 361, 1)
-    theta = np.radians(r)
-    fig = plt.figure()
-    ax = fig.add_subplot(111, polar=True)
-    distance_list = [None] * 360
-    total = 0
+# Set the socket type.
+server_sock = bluetooth.BluetoothSocket( bluetooth.RFCOMM )
+
+# Get an available port on the Raspberry Pi.
+#port = bluetooth.get_available_port( bluetooth.RFCOMM )
+port = 0
+
+# Bind the socket server to the Raspberry Pi on the port we got above.
+server_sock.bind(("", port))
+
+# Now we will listen for connection on the port.
+server_sock.listen(1)
+
+# In order to allow for the phone to detect and identify the 
+# correct bluetooth connection, we need to advertise our service.
+UUID = "1e0ca4ea-299d-4335-93eb-27fcfe7fa848"
+bluetooth.advertise_service( server_sock, "FloorPlanr", UUID )
+
+# Now we can capture the details of the phone once the connection is
+# made.
+(client_sock,address) = server_sock.accept()
+
+print ('Connected to ' + str(address))
+
+def sendLIDARData():
+    distance_list = ""
+    base_angle = -1
 
     while True:
+        # Here we need to check to make sure that the phone
+        # has not sent a stop command.
+        data = client_sock.recv(1024)
+        if (data == 'Stop'):
+            # If the phone sends a stop command, then we need
+            # to break the loop and go back to listening for a start
+            # command.
+            break
+        
         try:
             result = ser.read(42)  
             if (result[-1] == result[-2]):
                 rpm = result[3]*256 + result[2]
-                #print("RPM" + str(rpm))
                 base_angle = (result[1] - 160)*6
                 for x in range(6):
-                    angle = base_angle + x
+                    #angle = base_angle + x
                     distance = result[((6*(x+1))+1)]*256 + result[((6*(x+1)))]
-                    if distance_list[angle] != distance:
-                        if distance > 0:
-                           distance_list[angle] = distance
-                           total += 1
-                        else:
-                            distance_list[angle] = 4200
-                            total += 1
-            print(total)
-            if total >= 360:
-                total = 0
-                plt.cla()
-                ax.plot(theta, distance_list)
-                plt.pause(.1)
+                    distance_list = distance_list + "," + distance
+                
+                # After collecting all 6 distances sent from each packet of 
+                # LIDAR data, we will send the distance data along with the
+                # base angle to the phone.
+                client_sock.send(base_angle + ":" + distance_list)
                         
         except IndexError:
             ser.write(b'e')
             print('Stopped! Out of sync.')
-        
-try:
-    ser.write(b'b')
-    init()
-    plt.show()
+            # Here we will need to go back to the main while loop.
+            # In the main loop we will check to see if we returned bacause of
+            # the LIDAR being out of sync or it the phone sent a stop command.
+            # We will return 1 to indicate an error.
+            return 1
+    # Here we return with 0 to indicate that the method did not throw any errors.
+    # This means that we are returning because the phone sent a stop command.
+    return 0
+
+
+lidar_execution_result = 0
+# Stay connected while waiting for instructions from the phone.
+while True:
+    data = client_sock.recv(1024)
+    # If the sendLIDARData returned with an error, then we need
+    # to call the method again.
+    if (data == 'Start' or lidar_execution_result == 1 ):
+        # Here we will call the function to start sending
+        # LIDAR data to the phone.
+        lidar_execution_result = sendLIDARData()
     
-
-except KeyboardInterrupt:
-    ser.write(b'e')
-    print('Stop')
-
+    # TODO: We need to monitor the bluetooth connection.  When the connection is
+    # closed, we will need to reset the application (close the connection, 
+    # go back to accepting connections).
