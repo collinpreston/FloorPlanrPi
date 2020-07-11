@@ -1,3 +1,4 @@
+import datetime
 import bluetooth
 import serial
 
@@ -58,8 +59,8 @@ try:
                     # After collecting all 6 distances sent from each packet of 
                     # LIDAR data, we will send the distance data along with the
                     # base angle to the phone.
-                    client_sock.send(base_angle + ":" + distance_list)
-                            
+                    client_sock.send(datetime.datetime.now() + "_" + base_angle + ":" + distance_list + "#")
+                break
             except IndexError:
                 ser.write(b'e')
                 print('Stopped! Out of sync.')
