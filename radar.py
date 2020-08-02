@@ -60,6 +60,7 @@ try:
                     # LIDAR data, we will send the distance data along with the
                     # base angle to the phone.
                     client_sock.send(base_angle + ":" + distance_list)
+                    print('here')
 
             except IndexError:
                 ser.write(b'e')
