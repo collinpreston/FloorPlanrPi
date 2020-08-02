@@ -65,6 +65,8 @@ try:
 
                     print(str(datetime.datetime.now()) + "_" + str(base_angle) + ":" + str(distance_list) + "#")
 
+                    distance_list = ""
+
             except IndexError:
                 ser.write(b'e')
                 print('Stopped! Out of sync.')
