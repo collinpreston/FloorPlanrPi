@@ -1,5 +1,6 @@
 import bluetooth
 import serial
+import datetime
 
 ser = serial.Serial("/dev/serial0", baudrate=230400)
 
@@ -56,9 +57,13 @@ try:
                     # After collecting all 6 distances sent from each packet of
                     # LIDAR data, we will send the distance data along with the
                     # base angle to the phone.
-                    print('here1')
-                    client_sock.send(str(base_angle) + ":" + str(distance_list))
-                    print('here2')
+                    client_sock.send(str(datetime.datetime.now()) +
+                                     "_" +
+                                     str(base_angle) + ":" +
+                                     str(distance_list) +
+                                     "#")
+
+                    print(str(datetime.datetime.now()) + "_" + str(base_angle) + ":" + str(distance_list) + "#")
 
             except IndexError:
                 ser.write(b'e')
