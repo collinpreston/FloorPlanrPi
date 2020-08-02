@@ -59,7 +59,8 @@ try:
                     # base angle to the phone.
                     client_sock.send(str(datetime.datetime.now()) +
                                      "_" +
-                                     str(base_angle) + ":" +
+                                     str(base_angle) +
+                                     "*" +
                                      str(distance_list) +
                                      "#")
 
