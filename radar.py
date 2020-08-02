@@ -57,7 +57,7 @@ try:
                     # LIDAR data, we will send the distance data along with the
                     # base angle to the phone.
                     print('here1')
-                    client_sock.send(base_angle + ":" + distance_list)
+                    client_sock.send(str(base_angle) + ":" + str(distance_list))
                     print('here2')
 
             except IndexError:
