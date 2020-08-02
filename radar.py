@@ -32,15 +32,14 @@ try:
 
     def sendLIDARData():
         distance_list = ""
-        base_angle = -1
         ser.write(b'b')
 
         while True:
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
-            data = client_sock.recv(1024)
+            data = client_sock.recv(1024).decode()
 
-            if (data == 'Stop'):
+            if data == 'Stop':
                 # If the phone sends a stop command, then we need
                 # to break the loop and go back to listening for a start
                 # command.
@@ -48,19 +47,18 @@ try:
 
             try:
                 result = ser.read(42)
-                if (result[-1] == result[-2]):
-                    rpm = result[3] * 256 + result[2]
+                if result[-1] == result[-2]:
                     base_angle = (result[1] - 160) * 6
                     for x in range(6):
-                        # angle = base_angle + x
-                        distance = result[((6 * (x + 1)) + 1)] * 256 + result[((6 * (x + 1)))]
+                        distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
                         distance_list = distance_list + "," + distance
 
                     # After collecting all 6 distances sent from each packet of
                     # LIDAR data, we will send the distance data along with the
                     # base angle to the phone.
+                    print('here1')
                     client_sock.send(base_angle + ":" + distance_list)
-                    print('here')
+                    print('here2')
 
             except IndexError:
                 ser.write(b'e')
@@ -84,7 +82,7 @@ try:
 
         # If the sendLIDARData returned with an error, then we need
         # to call the method again.
-        if (data == 'Start' or lidar_execution_result == 1):
+        if data == 'Start' or lidar_execution_result == 1:
             # Here we will call the function to start sending
             # LIDAR data to the phone.
             lidar_execution_result = sendLIDARData()
