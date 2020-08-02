@@ -41,6 +41,7 @@ try:
             # TODO: Check if the connection is still open and connected to the phone.
             # If not, then we need to keep the pi open and not crash.
             data = client_sock.recv(1024)
+            print('here')
 
             if (data == 'Stop'):
                 # If the phone sends a stop command, then we need
@@ -60,7 +61,6 @@ try:
                     # After collecting all 6 distances sent from each packet of 
                     # LIDAR data, we will send the distance data along with the
                     # base angle to the phone.
-                    print('here')
                     client_sock.send(datetime.datetime.now() + "_" + base_angle + ":" + distance_list + "#")
                 break
             except IndexError:
