@@ -40,11 +40,11 @@ try:
             # has not sent a stop command.
             # TODO: Check if the connection is still open and connected to the phone.
             # If not, then we need to keep the pi open and not crash.
-            data = client_sock.recv(1024)
+            data1 = client_sock.recv(1024).decode()
             print('here')
 
 
-            if (data == 'Stop'):
+            if (data1 == 'Stop'):
                 # If the phone sends a stop command, then we need
                 # to break the loop and go back to listening for a start
                 # command.
