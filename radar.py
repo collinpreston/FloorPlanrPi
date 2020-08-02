@@ -57,7 +57,7 @@ try:
                     base_angle = (result[1] - 160) * 6
                     for x in range(6):
                         distance = result[((6 * (x + 1)) + 1)] * 256 + result[((6 * (x + 1)))]
-                        distance_list = distance_list + "," + distance
+                        distance_list = str(distance_list) + "," + str(distance)
 
                     # After collecting all 6 distances sent from each packet of 
                     # LIDAR data, we will send the distance data along with the
