@@ -37,7 +37,7 @@ try:
         while True:
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
-            data = client_sock.recv(1024).decode()
+            #data = client_sock.recv(1024).decode()
 
             if data == 'Stop':
                 # If the phone sends a stop command, then we need
