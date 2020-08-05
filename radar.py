@@ -3,7 +3,7 @@ import serial
 import datetime
 import time
 
-ser = serial.Serial("/dev/serial0", baudrate=230400, timeout=5)
+ser = serial.Serial("/dev/serial0", baudrate=230400)
 
 try:
 
@@ -68,8 +68,8 @@ try:
                     print(str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(distance_list) + "#")
 
                     distance_list = ""
-                    ser.flushOutput()
-
+                    ser.reset_input_buffer()
+                    time.sleep(.01)
 
             except IndexError:
                 ser.write(b'e')
