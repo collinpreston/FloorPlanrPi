@@ -35,11 +35,13 @@ try:
     def sendLIDARData():
         distance_list = ""
         ser.write(b'b')
+        total_angle_count = 0
+        full_circle_list = ""
 
         while True:
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
-            #data = client_sock.recv(1024).decode()
+            # data = client_sock.recv(1024).decode()
 
             if data == 'Stop':
                 # If the phone sends a stop command, then we need
@@ -58,18 +60,27 @@ try:
                     # After collecting all 6 distances sent from each packet of
                     # LIDAR data, we will send the distance data along with the
                     # base angle to the phone.
-                    client_sock.send(str(datetime.datetime.now()) +
-                                     "_" +
-                                     str(base_angle) +
-                                     "*" +
-                                     str(distance_list) +
-                                     "#")
+                    full_circle_list = full_circle_list + (str(datetime.datetime.now()) +
+                                                           "_" +
+                                                           str(base_angle) +
+                                                           "*" +
+                                                           str(distance_list) +
+                                                           "#")
 
                     print(str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(distance_list) + "#")
 
                     distance_list = ""
 
                     time.sleep(1)
+                if total_angle_count == 360:
+                    client_sock.send(full_circle_list)
+                    total_angle_count = 0
+                    full_circle_list = ""
+                else:
+                    total_angle_count = total_angle_count + 1
+
+
+
 
             except IndexError:
                 ser.write(b'e')
