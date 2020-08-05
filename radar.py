@@ -71,11 +71,11 @@ try:
 
                     distance_list = ""
 
-                    time.sleep(1)
                 if total_angle_count == 360:
                     client_sock.send(full_circle_list)
                     total_angle_count = 0
                     full_circle_list = ""
+                    time.sleep(1)
                 else:
                     total_angle_count = total_angle_count + 1
 
