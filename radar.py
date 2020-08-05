@@ -68,7 +68,7 @@ try:
                     print(str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(distance_list) + "#")
 
                     distance_list = ""
-                    ser.flush()
+                    ser.flushInput()
                     time.sleep(.2)
 
             except IndexError:
