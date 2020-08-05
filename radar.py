@@ -2,7 +2,7 @@ import bluetooth
 import serial
 import datetime
 
-ser = serial.Serial("/dev/serial0", baudrate=1984)
+ser = serial.Serial("/dev/serial0", baudrate=230400)
 
 try:
 
