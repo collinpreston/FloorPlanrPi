@@ -1,6 +1,7 @@
 import bluetooth
 import serial
 import datetime
+import time
 
 ser = serial.Serial("/dev/serial0", baudrate=230400)
 
@@ -67,6 +68,8 @@ try:
                     print(str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(distance_list) + "#")
 
                     distance_list = ""
+
+                    time.sleep(.1)
 
             except IndexError:
                 ser.write(b'e')
