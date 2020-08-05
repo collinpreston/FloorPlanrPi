@@ -69,7 +69,7 @@ try:
 
                     distance_list = ""
                     ser.flushOutput()
-                    time.sleep(.2)
+
 
             except IndexError:
                 ser.write(b'e')
