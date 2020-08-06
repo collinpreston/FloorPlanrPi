@@ -83,10 +83,10 @@ try:
             # base angle to the phone.
             client_sock.send(supreme_list)
             unique_values = 0
-            #ser.write(b'e')
-            #time.sleep(.001)
-            #ser.write(b'b')
-            #time.sleep(.001)
+            ser.write(b'e')
+            time.sleep(.001)
+            ser.write(b'b')
+            time.sleep(.001)
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
         return 0
