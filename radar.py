@@ -52,12 +52,12 @@ try:
                 break
 
             while unique_values < 360:
-                print('here')
                 try:
                     result = ser.read(42)
                     if result[-1] == result[-2]:
                         base_angle = (result[1] - 160) * 6
                         for x in range(6):
+                            print('here')
                             distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
                             distance_list = str(distance_list) + "," + str(distance)
                             unique_values += 1
