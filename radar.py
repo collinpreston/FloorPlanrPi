@@ -33,9 +33,6 @@ try:
 
 
     def sendLIDARData():
-        distance_list = ""
-        supreme_list = ""
-        unique_values = 0
         ser.write(b'b')
         print('Started')
 
@@ -44,6 +41,9 @@ try:
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
             #data = client_sock.recv(1024).decode()
+            unique_values = 0
+            supreme_list = ""
+            distance_list = ""
 
             if data == 'Stop':
                 # If the phone sends a stop command, then we need
