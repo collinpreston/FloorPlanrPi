@@ -54,8 +54,8 @@ try:
             while unique_values < 360:
                 try:
                     result = ser.read(42)
+                    print('here')
                     if result[-1] == result[-2]:
-                        print('here')
                         base_angle = (result[1] - 160) * 6
                         for x in range(6):
                             distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
