@@ -55,7 +55,6 @@ try:
             while unique_values < 360:
                 try:
                     result = ser.read(42)
-                    print('here')
                     if result[-1] == result[-2]:
                         base_angle = (result[1] - 160) * 6
                         for x in range(6):
@@ -82,6 +81,7 @@ try:
             # LIDAR data, we will send the distance data along with the
             # base angle to the phone.
             client_sock.send(supreme_list)
+            print(supreme_list + " test")
             unique_values = 0
             ser.write(b'e')
             time.sleep(.001)
