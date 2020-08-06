@@ -37,6 +37,7 @@ try:
         distance_list = ""
         supreme_list = ""
         ser.write(b'b')
+        print('Started')
 
         while True:
             # Here we need to check to make sure that the phone
