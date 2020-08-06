@@ -33,9 +33,7 @@ try:
 
 
     def sendLIDARData():
-        unique_values = 0
         distance_list = ""
-        supreme_list = ""
         ser.write(b'b')
         print('Started')
 
@@ -53,6 +51,7 @@ try:
 
             try:
                 result = ser.read(42)
+                print('here')
                 if result[-1] == result[-2]:
                     base_angle = (result[1] - 160) * 6
                     for x in range(6):
