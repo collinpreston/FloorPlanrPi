@@ -58,12 +58,11 @@ try:
                         for x in range(6):
                             distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
                             distance_list = str(distance_list) + "," + str(distance)
-                            if unique_angle_list[base_angle + x] is None:
-                                unique_values += 1
-                                print(str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
-                                    distance_list) + "#")
-                                supreme_list += str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
-                                    distance_list) + "#"
+                            unique_values += 1
+                        print(str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
+                            distance_list) + "#")
+                        supreme_list += str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
+                            distance_list) + "#"
 
                         distance_list = ""
 
