@@ -47,6 +47,7 @@ try:
                 # If the phone sends a stop command, then we need
                 # to break the loop and go back to listening for a start
                 # command.
+                print('Stop')
                 break
 
             while unique_values < 360:
