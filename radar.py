@@ -52,6 +52,7 @@ try:
                 break
 
             while unique_values < 360:
+                print('here')
                 try:
                     result = ser.read(42)
                     if result[-1] == result[-2]:
