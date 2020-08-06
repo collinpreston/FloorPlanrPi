@@ -34,10 +34,13 @@ try:
 
     def sendLIDARData():
         distance_list = ""
+        supreme_list = ""
+        unique_values = 0
         ser.write(b'b')
         print('Started')
 
         while True:
+            # TODO: Put a pause after the read.
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
             #data = client_sock.recv(1024).decode()
@@ -49,36 +52,41 @@ try:
                 print('Stop')
                 break
 
-            try:
-                result = ser.read(42)
-                print('here')
-                if result[-1] == result[-2]:
-                    base_angle = (result[1] - 160) * 6
-                    for x in range(6):
-                        distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
-                        distance_list = str(distance_list) + "," + str(distance)
+            while unique_values < 360:
+                try:
+                    result = ser.read(42)
+                    print('here')
+                    if result[-1] == result[-2]:
+                        base_angle = (result[1] - 160) * 6
+                        for x in range(6):
+                            distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
+                            distance_list = str(distance_list) + "," + str(distance)
+                            unique_values += 1
+                        print(str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
+                            distance_list) + "#")
+                        supreme_list += str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
+                            distance_list) + "#"
 
-                    # After collecting all 6 distances sent from each packet of
-                    # LIDAR data, we will send the distance data along with the
-                    # base angle to the phone.
-                    client_sock.send(str(datetime.datetime.now()) +
-                                     "_" +
-                                     str(base_angle) + ":" +
-                                     str(distance_list) +
-                                     "#")
+                        distance_list = ""
 
-                    print(str(datetime.datetime.now()) + "_" + str(base_angle) + ":" + str(distance_list) + "#")
+                except IndexError:
+                    ser.write(b'e')
+                    print('Stopped! Out of sync.')
+                    # Here we will need to go back to the main while loop.
+                    # In the main loop we will check to see if we returned bacause of
+                    # the LIDAR being out of sync or it the phone sent a stop command.
+                    # We will return 1 to indicate an error.
+                    return 1
 
-                    distance_list = ""
-
-            except IndexError:
-                ser.write(b'e')
-                print('Stopped! Out of sync.')
-                # Here we will need to go back to the main while loop.
-                # In the main loop we will check to see if we returned bacause of
-                # the LIDAR being out of sync or it the phone sent a stop command.
-                # We will return 1 to indicate an error.
-                return 1
+            # After collecting all 6 distances sent from each packet of
+            # LIDAR data, we will send the distance data along with the
+            # base angle to the phone.
+            client_sock.send(supreme_list)
+            unique_values = 0
+            #ser.write(b'e')
+            #time.sleep(.001)
+            #ser.write(b'b')
+            #time.sleep(.001)
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
         return 0
