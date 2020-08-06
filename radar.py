@@ -68,8 +68,7 @@ try:
                     print(str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(distance_list) + "#")
 
                     distance_list = ""
-                    ser.reset_input_buffer()
-                    time.sleep(.01)
+
 
             except IndexError:
                 ser.write(b'e')
