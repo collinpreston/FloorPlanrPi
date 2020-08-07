@@ -52,6 +52,7 @@ try:
                 print('Stop')
                 break
 
+            ser.write(b'b')
             while unique_values < 360:
                 try:
                     result = ser.read(42)
@@ -84,9 +85,7 @@ try:
             print(supreme_list + " test")
             unique_values = 0
             ser.write(b'e')
-            time.sleep(.001)
-            ser.write(b'b')
-            time.sleep(.001)
+            time.sleep(.1)
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
         return 0
