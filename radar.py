@@ -33,8 +33,6 @@ try:
 
 
     def sendLIDARData():
-        ser.write(b'b')
-        print('Started')
 
         while True:
             # TODO: Put a pause after the read.
