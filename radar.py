@@ -60,8 +60,6 @@ try:
                             distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
                             distance_list = str(distance_list) + "," + str(distance)
                             unique_values += 1
-                        print(str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
-                            distance_list) + "#")
                         supreme_list += str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
                             distance_list) + "#"
 
@@ -80,10 +78,9 @@ try:
             # LIDAR data, we will send the distance data along with the
             # base angle to the phone.
             client_sock.send(supreme_list)
-            print(supreme_list + " test")
             unique_values = 0
             ser.write(b'e')
-            time.sleep(.1)
+            time.sleep(.01)
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
         return 0
