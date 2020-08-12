@@ -51,7 +51,7 @@ try:
                 break
 
             ser.write(b'b')
-            while unique_values < 360:
+            while unique_values < 180:
                 try:
                     result = ser.read(42)
                     if result[-1] == result[-2]:
