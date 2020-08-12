@@ -3,7 +3,7 @@ import serial
 import datetime
 import time
 
-ser = serial.Serial("/dev/serial0", baudrate=9600)
+ser = serial.Serial("/dev/serial0", baudrate=4200)
 
 try:
 
