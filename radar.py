@@ -78,6 +78,7 @@ try:
             # LIDAR data, we will send the distance data along with the
             # base angle to the phone.
             client_sock.send(supreme_list)
+            print(str(datetime.datetime.now()))
             unique_values = 0
             ser.write(b'e')
             time.sleep(.005)
