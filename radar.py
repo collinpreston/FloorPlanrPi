@@ -36,6 +36,7 @@ try:
 
         while True:
             # TODO: Put a pause after the read.
+            ser.write(b'b')
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
             #data = client_sock.recv(1024).decode()
@@ -50,7 +51,6 @@ try:
                 print('Stop')
                 break
 
-            ser.write(b'b')
             while unique_values < 180:
                 try:
                     result = ser.read(42)
