@@ -81,7 +81,7 @@ try:
             print(str(datetime.datetime.now()))
             unique_values = 0
             ser.write(b'e')
-            time.sleep(.005)
+            #time.sleep(.005)
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
         return 0
