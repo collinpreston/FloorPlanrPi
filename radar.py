@@ -61,7 +61,7 @@ try:
             while collected_data < 180:
                 try:
                     total_result += ser.read(42)
-                    print(total_result)
+                    # print(total_result)
                     collected_data += 1
 
                 except IndexError:
@@ -76,7 +76,7 @@ try:
             while unique_values < 180:
                 result = total_result[(unique_values * 41):total_result.index(41 * unique_values + 41)]
                 # print(str(result))
-                # print(str(result[-1]) + " " + str(result[-2]))
+                print(str(result[-1]) + " " + str(result[-2]))
                 if result[-1] == result[-2]:
                     print("here!")
                     base_angle = (result[1] - 160) * 6
