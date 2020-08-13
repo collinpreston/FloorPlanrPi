@@ -68,7 +68,7 @@ try:
                     return 1
 
             data_group = 0
-            print(str(len(total_result)))
+            print(str(unique_values))
             while unique_values < 180:
                 result = total_result[(data_group * 42):(42 * data_group) + 42]
                 # TODO: there is the chance that we don't enter the if loop and thus get
