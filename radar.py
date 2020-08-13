@@ -56,25 +56,12 @@ try:
             #     bytesToRead = ser.inWaiting()
 
             #total_result = ser.read(2520)
-            while unique_values < 180:
+            total_result = []
+            collected_data = 0
+            while collected_data < 180:
                 try:
-                    result = ser.read(42)
-                    # TODO Gonna need to increment this so that we don't
-                    # just get the first 6 angles every time.
-                    #result = total_result[:total_result.index(43)]
-                    print(str(result))
-                    print(str(result[-1]) + " " + str(result[-2]))
-                    if result[-1] == result[-2]:
-                        print("here!")
-                        base_angle = (result[1] - 160) * 6
-                        for x in range(6):
-                            distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
-                            distance_list = str(distance_list) + "," + str(distance)
-                            unique_values += 1
-                        supreme_list += str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
-                            distance_list) + "#"
-
-                        distance_list = ""
+                    total_result += ser.read(42)
+                    collected_data += 1
 
                 except IndexError:
                     ser.write(b'e')
@@ -84,6 +71,26 @@ try:
                     # the LIDAR being out of sync or it the phone sent a stop command.
                     # We will return 1 to indicate an error.
                     return 1
+
+
+            while unique_values < 180:
+                # TODO Gonna need to increment this so that we don't
+                # just get the first 6 angles every time.
+                # result = total_result[:total_result.index(43)]
+                result = total_result[(unique_values * 43):total_result.index(43 * unique_values + 43)]
+                print(str(result))
+                print(str(result[-1]) + " " + str(result[-2]))
+                if result[-1] == result[-2]:
+                    print("here!")
+                    base_angle = (result[1] - 160) * 6
+                    for x in range(6):
+                        distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
+                        distance_list = str(distance_list) + "," + str(distance)
+                        unique_values += 1
+                    supreme_list += str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
+                        distance_list) + "#"
+
+                    distance_list = ""
 
             # After collecting all 6 distances sent from each packet of
             # LIDAR data, we will send the distance data along with the
