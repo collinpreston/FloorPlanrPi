@@ -62,7 +62,6 @@ try:
                     # Gonna need to increment this so that we don't
                     # just get the first 6 angles every time.
                     result = total_result[:total_result.index(44)]
-                    print(str(result))
                     if result[-1] == result[-2]:
                         print("here!")
                         base_angle = (result[1] - 160) * 6
