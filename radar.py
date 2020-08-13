@@ -58,15 +58,11 @@ try:
             #total_result = ser.read(2520)
             while unique_values < 180:
                 try:
-                    bytesToRead = ser.inWaiting()
-                    while bytesToRead < 2520:
-                        bytesToRead = ser.inWaiting()
-
-                    total_result = ser.read(2520)
-                    #result = ser.read(42)
+                    result = ser.read(42)
                     # TODO Gonna need to increment this so that we don't
                     # just get the first 6 angles every time.
-                    result = total_result[:total_result.index(42)]
+                    #result = total_result[:total_result.index(43)]
+                    print(str(result))
                     print(str(result[-1]) + " " + str(result[-2]))
                     if result[-1] == result[-2]:
                         print("here!")
