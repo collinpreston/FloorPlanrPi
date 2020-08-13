@@ -61,6 +61,7 @@ try:
             while collected_data < 180:
                 try:
                     total_result += ser.read(42)
+                    print(len(total_result))
                     collected_data += 1
 
                 except IndexError:
@@ -77,8 +78,8 @@ try:
                 # just get the first 6 angles every time.
                 # result = total_result[:total_result.index(43)]
                 result = total_result[(unique_values * 43):total_result.index(43 * unique_values + 43)]
-                print(str(result))
-                print(str(result[-1]) + " " + str(result[-2]))
+                # print(str(result))
+                # print(str(result[-1]) + " " + str(result[-2]))
                 if result[-1] == result[-2]:
                     print("here!")
                     base_angle = (result[1] - 160) * 6
