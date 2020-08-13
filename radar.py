@@ -56,13 +56,13 @@ try:
                 bytesToRead = ser.inWaiting()
 
             total_result = ser.read(2520)
-            print(str(total_result))
             while unique_values < 180:
                 try:
                     #result = ser.read(42)
                     # Gonna need to increment this so that we don't
                     # just get the first 6 angles every time.
                     result = total_result[:total_result.index(41)]
+                    print(str(result))
                     if result[-1] == result[-2]:
                         print("here!")
                         base_angle = (result[1] - 160) * 6
