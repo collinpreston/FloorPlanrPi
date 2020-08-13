@@ -96,7 +96,7 @@ try:
 
             # We need to sleep after sending the stop command to the lidar.  Otherwise the lidar will not turn
             # back on.
-            time.sleep(.5)
+            time.sleep(.05)
 
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
