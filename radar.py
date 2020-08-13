@@ -69,6 +69,9 @@ try:
 
             while unique_values < 180:
                 result = total_result[(unique_values * 42):(42 * unique_values) + 42]
+                print(str(unique_values))
+                # TODO: there is the chance that we don't enter the if loop and thus get
+                # stuck in this while loop.  We should have an else condition.
                 if result[-1] == result[-2]:
                     base_angle = (result[1] - 160) * 6
                     for x in range(6):
