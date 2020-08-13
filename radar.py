@@ -68,7 +68,6 @@ try:
                     return 1
 
             data_group = 0
-            print(str(unique_values))
             while unique_values < 180:
                 result = total_result[(data_group * 42):(42 * data_group) + 42]
                 # TODO: there is the chance that we don't enter the if loop and thus get
@@ -95,7 +94,7 @@ try:
 
             # We need to sleep after sending the stop command to the lidar.  Otherwise the lidar will not turn
             # back on.
-            time.sleep(.001)
+            time.sleep(.01)
 
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
