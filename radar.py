@@ -36,6 +36,7 @@ try:
 
         while True:
             # TODO: Put a pause after the read.
+            ser.reset_input_buffer()
             ser.write(b'b')
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
@@ -86,8 +87,6 @@ try:
                         distance_list) + "#"
 
                     distance_list = ""
-                else:
-                    break
             # After collecting all 6 distances sent from each packet of
             # LIDAR data, we will send the distance data along with the
             # base angle to the phone.
