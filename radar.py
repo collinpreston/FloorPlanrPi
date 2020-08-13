@@ -69,10 +69,10 @@ try:
 
             while unique_values < 180:
                 result = total_result[(unique_values * 42):(42 * unique_values) + 42]
-                print(str(unique_values))
                 # TODO: there is the chance that we don't enter the if loop and thus get
                 # stuck in this while loop.  We should have an else condition.
                 if result[-1] == result[-2]:
+                    print(str(unique_values))
                     base_angle = (result[1] - 160) * 6
                     for x in range(6):
                         distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
@@ -88,7 +88,6 @@ try:
             # base angle to the phone.
             client_sock.send(supreme_list)
             print(str(datetime.datetime.now()))
-            unique_values = 0
             ser.write(b'e')
 
             # We need to sleep after sending the stop command to the lidar.  Otherwise the lidar will not turn
