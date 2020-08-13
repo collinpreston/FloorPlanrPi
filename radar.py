@@ -82,7 +82,7 @@ try:
             client_sock.send(supreme_list)
             ser.write(b'e')
             print(str(datetime.datetime.now()))
-            time.sleep(.009)
+            time.sleep(.01)
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
         return 0
