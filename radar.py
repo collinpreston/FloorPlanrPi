@@ -51,9 +51,15 @@ try:
                 print('Stop')
                 break
 
+            bytesToRead = ser.inWaiting()
+            while bytesToRead < 15120:
+                bytesToRead = ser.inWaiting()
+
+            total_result = ser.read(15120)
             while unique_values < 180:
                 try:
-                    result = ser.read(42)
+                    #result = ser.read(42)
+                    result = total_result[:total_result.index(42)]
                     if result[-1] == result[-2]:
                         base_angle = (result[1] - 160) * 6
                         for x in range(6):
