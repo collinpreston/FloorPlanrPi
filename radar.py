@@ -3,7 +3,7 @@ import serial
 import datetime
 import time
 
-ser = serial.Serial("/dev/serial0", baudrate=9600)
+ser = serial.Serial("/dev/serial0", baudrate=230400)
 
 try:
 
@@ -52,12 +52,20 @@ try:
                 print('Stop')
                 break
 
-            total_result = []
-            collected_data = 0
-            while collected_data < 180:
+            ser.write(b'b')
+            while unique_values < 360:
                 try:
-                    total_result += ser.read(42)
-                    collected_data += 1
+                    result = ser.read(42)
+                    if result[-1] == result[-2]:
+                        base_angle = (result[1] - 160) * 6
+                        for x in range(6):
+                            distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
+                            distance_list = str(distance_list) + "," + str(distance)
+                            unique_values += 1
+                        supreme_list += str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
+                            distance_list) + "#"
+
+                        distance_list = ""
 
                 except IndexError:
                     ser.write(b'e')
@@ -68,34 +76,13 @@ try:
                     # We will return 1 to indicate an error.
                     return 1
 
-            data_group = 0
-            while unique_values < 180:
-                result = total_result[(data_group * 42):(42 * data_group) + 42]
-                # TODO: there is the chance that we don't enter the if loop and thus get
-                # stuck in this while loop.  We should have an else condition.
-                print(str(result[-1]) + " " + str(result[-2]))
-                if result[-1] == result[-2]:
-                    data_group += 1
-                    base_angle = (result[1] - 160) * 6
-                    for x in range(6):
-                        distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
-                        distance_list = str(distance_list) + "," + str(distance)
-                        unique_values += 1
-                    supreme_list += str(datetime.datetime.now()) + "_" + str(base_angle) + "*" + str(
-                        distance_list) + "#"
-
-                    distance_list = ""
             # After collecting all 6 distances sent from each packet of
             # LIDAR data, we will send the distance data along with the
             # base angle to the phone.
             client_sock.send(supreme_list)
-            print(str(datetime.datetime.now()))
+            unique_values = 0
             ser.write(b'e')
-
-            # We need to sleep after sending the stop command to the lidar.  Otherwise the lidar will not turn
-            # back on.
-            time.sleep(.005)
-
+            time.sleep(.05)
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
         return 0
