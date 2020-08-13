@@ -52,11 +52,11 @@ try:
                 break
 
             bytesToRead = ser.inWaiting()
-            while bytesToRead < 15120:
+            while bytesToRead < 2520:
                 bytesToRead = ser.inWaiting()
                 print("bytes" + str(bytesToRead))
 
-            total_result = ser.read(15120)
+            total_result = ser.read(2520)
             while unique_values < 180:
                 try:
                     #result = ser.read(42)
