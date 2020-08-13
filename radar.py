@@ -86,7 +86,8 @@ try:
                         distance_list) + "#"
 
                     distance_list = ""
-
+                else:
+                    break
             # After collecting all 6 distances sent from each packet of
             # LIDAR data, we will send the distance data along with the
             # base angle to the phone.
