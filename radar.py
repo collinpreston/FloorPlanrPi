@@ -55,7 +55,7 @@ try:
             # while bytesToRead < 2520:
             #     bytesToRead = ser.inWaiting()
 
-            #total_result = ser.read(2520)
+            # total_result = ser.read(2520)
             total_result = []
             collected_data = 0
             while collected_data < 180:
@@ -71,7 +71,6 @@ try:
                     # the LIDAR being out of sync or it the phone sent a stop command.
                     # We will return 1 to indicate an error.
                     return 1
-
 
             while unique_values < 180:
                 # TODO Gonna need to increment this so that we don't
