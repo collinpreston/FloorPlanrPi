@@ -78,7 +78,7 @@ try:
                 # just get the first 6 angles every time.
                 # result = total_result[:total_result.index(43)]
                 result = total_result[(unique_values * 42):total_result.index(42 * unique_values + 42)]
-                # print(str(result))
+                print(str(result))
                 # print(str(result[-1]) + " " + str(result[-2]))
                 if result[-1] == result[-2]:
                     print("here!")
