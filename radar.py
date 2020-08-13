@@ -56,11 +56,11 @@ try:
                 bytesToRead = ser.inWaiting()
 
             total_result = ser.read(2520)
-            print("bytes" + str(total_result))
             while unique_values < 180:
                 try:
                     #result = ser.read(42)
                     result = total_result[:total_result.index(42)]
+                    print("bytes" + str(total_result))
                     if result[-1] == result[-2]:
                         base_angle = (result[1] - 160) * 6
                         for x in range(6):
