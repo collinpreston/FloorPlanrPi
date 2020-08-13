@@ -59,7 +59,9 @@ try:
             while unique_values < 180:
                 try:
                     #result = ser.read(42)
-                    result = total_result[:total_result.index(42)]
+                    # Gonna need to incremement this so that we don't
+                    # just get the first 6 angles every time.
+                    result = total_result[:total_result.index(41)]
                     if result[-1] == result[-2]:
                         print("here!")
                         base_angle = (result[1] - 160) * 6
