@@ -66,7 +66,7 @@ try:
                     #result = ser.read(42)
                     # TODO Gonna need to increment this so that we don't
                     # just get the first 6 angles every time.
-                    result = total_result[:total_result.index(43)]
+                    result = total_result[:total_result.index(42)]
                     print(str(result[-1]) + " " + str(result[-2]))
                     if result[-1] == result[-2]:
                         print("here!")
