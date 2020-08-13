@@ -59,9 +59,10 @@ try:
             while unique_values < 180:
                 try:
                     #result = ser.read(42)
-                    # Gonna need to increment this so that we don't
+                    # TODO Gonna need to increment this so that we don't
                     # just get the first 6 angles every time.
                     result = total_result[:total_result.index(43)]
+                    print(str(result))
                     print(str(result[-1]) + " " + str(result[-2]))
                     if result[-1] == result[-2]:
                         print("here!")
