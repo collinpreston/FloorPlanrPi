@@ -68,10 +68,12 @@ try:
                     return 1
 
             data_group = 0
+            print(str(unique_values))
             while unique_values < 180:
                 result = total_result[(data_group * 42):(42 * data_group) + 42]
                 # TODO: there is the chance that we don't enter the if loop and thus get
                 # stuck in this while loop.  We should have an else condition.
+                print(str(result[-1]) + " " + str(result[-2]))
                 if result[-1] == result[-2]:
                     print(str(data_group))
                     data_group += 1
