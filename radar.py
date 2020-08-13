@@ -61,7 +61,7 @@ try:
             while collected_data < 180:
                 try:
                     total_result += ser.read(42)
-                    print(len(total_result))
+                    print(total_result)
                     collected_data += 1
 
                 except IndexError:
