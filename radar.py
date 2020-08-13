@@ -55,7 +55,7 @@ try:
             while bytesToRead < 2520:
                 bytesToRead = ser.inWaiting()
 
-            total_result = ser.read(42)
+            total_result = ser.read(2520)
             print(str(total_result))
             while unique_values < 180:
                 try:
