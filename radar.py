@@ -80,8 +80,8 @@ try:
             # LIDAR data, we will send the distance data along with the
             # base angle to the phone.
             client_sock.send(supreme_list)
-            unique_values = 0
             ser.write(b'e')
+            print(str(datetime.datetime.now()))
             time.sleep(.05)
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
