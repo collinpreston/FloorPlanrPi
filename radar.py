@@ -74,11 +74,10 @@ try:
                     return 1
 
             while unique_values < 180:
-                print("here")
                 # TODO Gonna need to increment this so that we don't
                 # just get the first 6 angles every time.
                 # result = total_result[:total_result.index(43)]
-                result = bytearray(total_result[(unique_values * 42):total_result.index(42 * unique_values + 42)])
+                result = bytearray(total_result[(unique_values * 43):total_result.index(43 * unique_values + 43)])
                 print(str(result))
                 # print(str(result[-1]) + " " + str(result[-2]))
                 if result[-1] == result[-2]:
