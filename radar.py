@@ -67,12 +67,14 @@ try:
                     # We will return 1 to indicate an error.
                     return 1
 
+            data_group = 0
             while unique_values < 180:
-                result = total_result[(unique_values * 42):(42 * unique_values) + 42]
+                result = total_result[(data_group * 42):(42 * data_group) + 42]
                 # TODO: there is the chance that we don't enter the if loop and thus get
                 # stuck in this while loop.  We should have an else condition.
                 if result[-1] == result[-2]:
-                    print(str(unique_values))
+                    print(str(data_group))
+                    data_group += 1
                     base_angle = (result[1] - 160) * 6
                     for x in range(6):
                         distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
