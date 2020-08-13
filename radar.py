@@ -51,17 +51,11 @@ try:
                 print('Stop')
                 break
 
-            # bytesToRead = ser.inWaiting()
-            # while bytesToRead < 2520:
-            #     bytesToRead = ser.inWaiting()
-
-            # total_result = ser.read(2520)
             total_result = []
             collected_data = 0
             while collected_data < 180:
                 try:
                     total_result += ser.read(42)
-                    # print(total_result)
                     collected_data += 1
 
                 except IndexError:
@@ -75,10 +69,7 @@ try:
 
             while unique_values < 180:
                 result = total_result[(unique_values * 42):(42 * unique_values) + 42]
-                print(str(result))
-                print(str(result[-1]) + " " + str(result[-2]))
                 if result[-1] == result[-2]:
-                    print("here!")
                     base_angle = (result[1] - 160) * 6
                     for x in range(6):
                         distance = result[((6 * (x + 1)) + 1)] * 256 + result[(6 * (x + 1))]
