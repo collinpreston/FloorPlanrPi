@@ -74,6 +74,7 @@ try:
                     return 1
 
             while unique_values < 180:
+                print("here")
                 # TODO Gonna need to increment this so that we don't
                 # just get the first 6 angles every time.
                 # result = total_result[:total_result.index(43)]
