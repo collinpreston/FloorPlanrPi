@@ -74,7 +74,7 @@ try:
                     return 1
 
             while unique_values < 180:
-                result = total_result[(unique_values * 41):total_result.index(41 * unique_values + 41)]
+                result = total_result[(unique_values * 42):total_result.index((42 * unique_values) + 41)]
                 print(str(result))
                 print(str(result[-1]) + " " + str(result[-2]))
                 if result[-1] == result[-2]:
