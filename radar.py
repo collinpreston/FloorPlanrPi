@@ -54,7 +54,7 @@ try:
                 try:
                     result = ser.read(42)
                     if result[-1] == result[-2]:
-                        client_sock.send(result)
+                        client_sock.send(str(result))
                         print(str(datetime.datetime.now()) + str(result))
 
                 except IndexError:
