@@ -1,7 +1,5 @@
 import bluetooth
 import serial
-import datetime
-import time
 
 ser = serial.Serial("/dev/serial0", baudrate=230400)
 
@@ -55,7 +53,7 @@ try:
                     result = ser.read(42)
                     if result[-1] == result[-2]:
                         print(str(result[7]))
-                        client_sock.send(str(result))
+                        client_sock.send(result)
 
                 except IndexError:
                     ser.write(b'e')
