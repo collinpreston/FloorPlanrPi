@@ -52,7 +52,7 @@ try:
                 try:
                     result = ser.read(42)
                     if result[-1] == result[-2]:
-                        client_sock.send(str(result))
+                        client_sock.send(result)
 
                 except IndexError:
                     ser.write(b'e')
