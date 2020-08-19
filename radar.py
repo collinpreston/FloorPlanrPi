@@ -52,7 +52,6 @@ try:
                 try:
                     result = ser.read(42)
                     if result[-1] == result[-2]:
-                        print(str(result[7]))
                         client_sock.send(result)
 
                 except IndexError:
