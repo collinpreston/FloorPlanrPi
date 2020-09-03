@@ -50,7 +50,7 @@ try:
             while True:
                 try:
                     ser.reset_input_buffer()
-                    result = ser.read(630)
+                    result = ser.read(1260)
                     client_sock.send(result)
                 except IndexError:
                     ser.write(b'e')
