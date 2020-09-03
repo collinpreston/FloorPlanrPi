@@ -49,11 +49,11 @@ try:
             ser.write(b'b')
             while True:
                 try:
+                    print(str(ser.in_waiting))
                     ser.reset_input_buffer()
                     result = ser.read(42)
                     if result[-1] == result[-2]:
                         client_sock.send(result)
-                    print(str(ser.in_waiting))
                 except IndexError:
                     ser.write(b'e')
                     print('Stopped! Out of sync.')
