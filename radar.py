@@ -50,7 +50,7 @@ try:
             while True:
                 try:
                     ser.reset_input_buffer()
-                    result = ser.read(2520)
+                    result = ser.read(1260)
                     if result[-1] == result[-2]:
                         client_sock.send(result)
                 except IndexError:
