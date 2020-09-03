@@ -38,7 +38,6 @@ try:
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
             #data = client_sock.recv(1024).decode()
-            unique_values = 0
 
             if data == 'Stop':
                 # If the phone sends a stop command, then we need
@@ -48,8 +47,9 @@ try:
                 break
 
             ser.write(b'b')
-            while unique_values < 360:
+            while True:
                 try:
+                    ser.reset_input_buffer();
                     result = ser.read(42)
                     if result[-1] == result[-2]:
                         client_sock.send(result)
