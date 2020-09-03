@@ -48,12 +48,28 @@ try:
 
             ser.write(b'b')
             while True:
+                final_array = []
                 try:
-                    print(str(ser.in_waiting))
-                    ser.reset_input_buffer()
-                    result = ser.read(42)
-                    if result[-1] == result[-2]:
-                        client_sock.send(result)
+                    waiting_bytes = ser.in_waiting
+                    if waiting_bytes > 84:
+                        big_result = ser.read(waiting_bytes)
+                        ser.reset_input_buffer()
+                        if waiting_bytes < 2520:
+                            result = big_result[:waiting_bytes - (waiting_bytes%42)]
+                        else:
+                            #TODO: update this to grab from the end since those value
+                            # will be most recent.  Will need to trim off the partial
+                            # values at the end.
+                            result = big_result[:2520]
+                    else:
+                        result = ser.read(42)
+                        ser.reset_input_buffer()
+                    for x in range(0, result.len()/42):
+                        temp = result[x*42:(x*42)+41]
+                        if temp[-1] == temp[-2]:
+                            final_array.append(temp)
+
+                    client_sock.send(final_array)
                 except IndexError:
                     ser.write(b'e')
                     print('Stopped! Out of sync.')
