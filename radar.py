@@ -50,9 +50,8 @@ try:
             while True:
                 try:
                     ser.reset_input_buffer()
-                    result = ser.read(1260)
-                    if result[-1] == result[-2]:
-                        client_sock.send(result)
+                    result = ser.read(630)
+                    client_sock.send(result)
                 except IndexError:
                     ser.write(b'e')
                     print('Stopped! Out of sync.')
