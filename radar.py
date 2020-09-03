@@ -49,7 +49,6 @@ try:
             ser.write(b'b')
             while True:
                 try:
-                    print(str(ser.in_waiting))
                     ser.reset_input_buffer()
                     result = ser.read(2520)
                     if result[-1] == result[-2]:
