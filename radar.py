@@ -28,7 +28,7 @@ try:
     print('Connected to ' + str(address))
 
 
-    def sendLIDARData():
+    def sendLIDARData(dataPacketSize):
 
         while True:
             # TODO: Put a pause after the read.
@@ -48,7 +48,7 @@ try:
             while True:
                 try:
                     ser.reset_input_buffer()
-                    result = ser.read(1260)
+                    result = ser.read(dataPacketSize)
                     client_sock.send(result)
                 except IndexError:
                     ser.write(b'e')
@@ -77,7 +77,7 @@ try:
         if data[:5] == 'start' or lidar_execution_result == 1:
             # Here we will call the function to start sending
             # LIDAR data to the phone.
-            lidar_execution_result = sendLIDARData()
+            lidar_execution_result = sendLIDARData(data[5:])
 
         # TODO: We need to monitor the bluetooth connection.  When the connection is
         # closed, we will need to reset the application (close the connection,
