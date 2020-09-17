@@ -19,7 +19,7 @@ try:
     # In order to allow for the phone to detect and identify the
     # correct bluetooth connection, we need to advertise our service.
     UUID = "1e0ca4ea-299d-4335-93eb-27fcfe7fa848"
-    bluetooth.advertise_service(server_sock, "lidar", UUID)
+    bluetooth.advertise_service(server_sock, "raspberrypi", UUID)
 
     # Now we can capture the details of the phone once the connection is
     # made.
