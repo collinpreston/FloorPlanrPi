@@ -8,8 +8,6 @@ try:
     # Set the socket type.
     server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
-    # Get an available port on the Raspberry Pi.
-    # port = bluetooth.get_available_port( bluetooth.RFCOMM )
     port = 1
 
     # Bind the socket server to the Raspberry Pi on the port we got above.
@@ -21,7 +19,7 @@ try:
     # In order to allow for the phone to detect and identify the
     # correct bluetooth connection, we need to advertise our service.
     UUID = "1e0ca4ea-299d-4335-93eb-27fcfe7fa848"
-    bluetooth.advertise_service(server_sock, "FloorPlanr", UUID)
+    bluetooth.advertise_service(server_sock, "lidar", UUID)
 
     # Now we can capture the details of the phone once the connection is
     # made.
@@ -30,7 +28,7 @@ try:
     print('Connected to ' + str(address))
 
 
-    def sendLIDARData():
+    def sendLIDARData(data_packet_size):
 
         while True:
             # TODO: Put a pause after the read.
@@ -39,18 +37,18 @@ try:
             # has not sent a stop command.
             #data = client_sock.recv(1024).decode()
 
-            if data == 'Stop':
+            if data == 'stop':
                 # If the phone sends a stop command, then we need
                 # to break the loop and go back to listening for a start
                 # command.
-                print('Stop')
+                print('stop')
                 break
 
             ser.write(b'b')
             while True:
                 try:
                     ser.reset_input_buffer()
-                    result = ser.read(1260)
+                    result = ser.read(data_packet_size)
                     client_sock.send(result)
                 except IndexError:
                     ser.write(b'e')
@@ -71,14 +69,13 @@ try:
     # Stay connected while waiting for instructions from the phone.
     while True:
         data = client_sock.recv(1024).decode()
-        print(data)
 
         # If the sendLIDARData returned with an error, then we need
         # to call the method again.
-        if data == 'Start' or lidar_execution_result == 1:
+        if data[:4] == 'start' or lidar_execution_result == 1:
             # Here we will call the function to start sending
             # LIDAR data to the phone.
-            lidar_execution_result = sendLIDARData()
+            lidar_execution_result = sendLIDARData(data[5:])
 
         # TODO: We need to monitor the bluetooth connection.  When the connection is
         # closed, we will need to reset the application (close the connection,
