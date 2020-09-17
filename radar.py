@@ -77,7 +77,7 @@ try:
         if data[:5] == 'start' or lidar_execution_result == 1:
             # Here we will call the function to start sending
             # LIDAR data to the phone.
-            lidar_execution_result = sendLIDARData(data[5:])
+            lidar_execution_result = sendLIDARData(int(data[5:]))
 
         # TODO: We need to monitor the bluetooth connection.  When the connection is
         # closed, we will need to reset the application (close the connection,
