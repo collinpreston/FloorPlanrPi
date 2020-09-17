@@ -69,11 +69,12 @@ try:
     # Stay connected while waiting for instructions from the phone.
     while True:
         data = client_sock.recv(1024).decode()
-        print(data[:4])
+        print(data[:5])
+        print(data[5:])
 
         # If the sendLIDARData returned with an error, then we need
         # to call the method again.
-        if data[:4] == 'start' or lidar_execution_result == 1:
+        if data[:5] == 'start' or lidar_execution_result == 1:
             # Here we will call the function to start sending
             # LIDAR data to the phone.
             lidar_execution_result = sendLIDARData()
