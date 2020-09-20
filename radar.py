@@ -25,8 +25,6 @@ try:
     # made.
     (client_sock, address) = server_sock.accept()
 
-    print('Connected to ' + str(address))
-
 
     def sendLIDARData(dataPacketSize):
 
@@ -41,18 +39,16 @@ try:
                 # If the phone sends a stop command, then we need
                 # to break the loop and go back to listening for a start
                 # command.
-                print('stop')
                 break
 
             ser.write(b'b')
             while True:
                 try:
-                    ser.reset_input_buffer()
                     result = ser.read(dataPacketSize)
+                    ser.reset_input_buffer()
                     client_sock.send(result)
                 except IndexError:
                     ser.write(b'e')
-                    print('Stopped! Out of sync.')
                     # Here we will need to go back to the main while loop.
                     # In the main loop we will check to see if we returned bacause of
                     # the LIDAR being out of sync or it the phone sent a stop command.
@@ -82,4 +78,3 @@ try:
         # go back to accepting connections).
 except KeyboardInterrupt:
     ser.write(b'e')
-    print('quit')
