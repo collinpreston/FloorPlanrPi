@@ -33,7 +33,7 @@ try:
             ser.reset_input_buffer()
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
-            #data = client_sock.recv(1024).decode()
+            # data = client_sock.recv(1024).decode()
 
             if data == 'stop':
                 # If the phone sends a stop command, then we need
@@ -78,3 +78,19 @@ try:
         # go back to accepting connections).
 except KeyboardInterrupt:
     ser.write(b'e')
+except bluetooth.btcommon.BluetoothError:
+    ser.write(b'e')
+    # Stay connected while waiting for instructions from the phone.
+    while True:
+        data = client_sock.recv(1024).decode()
+
+        # If the sendLIDARData returned with an error, then we need
+        # to call the method again.
+        if data[:5] == 'start' or lidar_execution_result == 1:
+            # Here we will call the function to start sending
+            # LIDAR data to the phone.
+            lidar_execution_result = sendLIDARData(int(data[5:]))
+
+        # TODO: We need to monitor the bluetooth connection.  When the connection is
+        # closed, we will need to reset the application (close the connection,
+        # go back to accepting connections).
