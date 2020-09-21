@@ -5,15 +5,14 @@ ser = serial.Serial("/dev/serial0", baudrate=230400)
 
 # Set the socket type.
 server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+port = 1
+
+# Bind the socket server to the Raspberry Pi on the port we got above.
+server_sock.bind(("", port))
 
 
 def thisistest():
     try:
-
-        port = 1
-
-        # Bind the socket server to the Raspberry Pi on the port we got above.
-        server_sock.bind(("", port))
 
         # Now we will listen for connection on the port.
         server_sock.listen(1)
