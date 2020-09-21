@@ -23,11 +23,6 @@ try:
 
     (client_sock, address) = server_sock.accept()
 
-    def accept_incoming_connection():
-        # Now we can capture the details of the phone once the connection is
-        # made.
-        (client_sock, address) = server_sock.accept()
-
     def sendLIDARData(dataPacketSize):
 
         while True:
@@ -76,7 +71,8 @@ try:
             lidar_execution_result = sendLIDARData(int(data[5:]))
 
         if lidar_execution_result == 2:
-            accept_incoming_connection()
+            (client_sock, address) = server_sock.accept()
+            lidar_execution_result = 0
 
         # TODO: We need to monitor the bluetooth connection.  When the connection is
         # closed, we will need to reset the application (close the connection,
