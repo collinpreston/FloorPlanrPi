@@ -84,5 +84,5 @@ try:
     thisistest()
 except bluetooth.btcommon.BluetoothError:
     ser.write(b'e')
-    server_sock.close
+    server_sock.close()
     thisistest()
