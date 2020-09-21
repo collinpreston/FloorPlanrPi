@@ -47,7 +47,7 @@ def thisistest():
                         result = ser.read(dataPacketSize)
                         ser.reset_input_buffer()
                         client_sock.send(result)
-                    except IndexError:
+                    except (IndexError, bluetooth.btcommon.BluetoothError):
                         ser.write(b'e')
                         # Here we will need to go back to the main while loop.
                         # In the main loop we will check to see if we returned bacause of
