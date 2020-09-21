@@ -3,6 +3,7 @@ import serial
 
 ser = serial.Serial("/dev/serial0", baudrate=230400)
 
+
 def thisistest():
     try:
 
@@ -25,7 +26,6 @@ def thisistest():
         # Now we can capture the details of the phone once the connection is
         # made.
         (client_sock, address) = server_sock.accept()
-
 
         def sendLIDARData(dataPacketSize):
 
@@ -60,7 +60,6 @@ def thisistest():
             # This means that we are returning because the phone sent a stop command.
             return 0
 
-
         lidar_execution_result = 0
 
         # Stay connected while waiting for instructions from the phone.
@@ -72,14 +71,15 @@ def thisistest():
             if data[:5] == 'start' or lidar_execution_result == 1:
                 # Here we will call the function to start sending
                 # LIDAR data to the phone.
-                try:
-                    lidar_execution_result = sendLIDARData(int(data[5:]))
+                lidar_execution_result = sendLIDARData(int(data[5:]))
 
             # TODO: We need to monitor the bluetooth connection.  When the connection is
             # closed, we will need to reset the application (close the connection,
             # go back to accepting connections).
     except KeyboardInterrupt:
         ser.write(b'e')
+
+
 try:
     thisistest()
 except bluetooth.btcommon.BluetoothError:
