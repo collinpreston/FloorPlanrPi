@@ -28,7 +28,6 @@ try:
     def sendLIDARData(dataPacketSize):
 
         while True:
-            # TODO: Put a pause after the read.
             ser.reset_input_buffer()
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
@@ -46,13 +45,15 @@ try:
                     result = ser.read(dataPacketSize)
                     ser.reset_input_buffer()
                     client_sock.send(result)
-                except (IndexError, bluetooth.btcommon.BluetoothError):
+                except IndexError:
                     ser.write(b'e')
                     # Here we will need to go back to the main while loop.
                     # In the main loop we will check to see if we returned bacause of
                     # the LIDAR being out of sync or it the phone sent a stop command.
                     # We will return 1 to indicate an error.
                     return 1
+                except bluetooth.btcommon.BluetoothError:
+                    return 2
 
         # Here we return with 0 to indicate that the method did not throw any errors.
         # This means that we are returning because the phone sent a stop command.
