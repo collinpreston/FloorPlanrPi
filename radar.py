@@ -51,6 +51,7 @@ try:
                     # We will return 1 to indicate an error.
                     return 1
                 except bluetooth.btcommon.BluetoothError:
+                    ser.write(b'e')
                     return 2
 
         # Here we return with 0 to indicate that the method did not throw any errors.
