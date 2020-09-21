@@ -21,9 +21,12 @@ try:
     UUID = "1e0ca4ea-299d-4335-93eb-27fcfe7fa848"
     bluetooth.advertise_service(server_sock, "raspberrypi", UUID)
 
-    # Now we can capture the details of the phone once the connection is
-    # made.
     (client_sock, address) = server_sock.accept()
+
+    def accept_incoming_connection():
+        # Now we can capture the details of the phone once the connection is
+        # made.
+        (client_sock, address) = server_sock.accept()
 
     def sendLIDARData(dataPacketSize):
 
@@ -71,6 +74,9 @@ try:
             # Here we will call the function to start sending
             # LIDAR data to the phone.
             lidar_execution_result = sendLIDARData(int(data[5:]))
+
+        if lidar_execution_result == 2:
+            accept_incoming_connection()
 
         # TODO: We need to monitor the bluetooth connection.  When the connection is
         # closed, we will need to reset the application (close the connection,
