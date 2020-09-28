@@ -41,6 +41,7 @@ try:
             while True:
                 try:
                     result = ser.read(dataPacketSize)
+                    print("read")
                     ser.reset_input_buffer()
                     client_sock.send(result)
                 except IndexError:
