@@ -47,6 +47,7 @@ try:
                     for x in (len(data) / 42):
                         tempData = data[(x * 42):((x * 42) + 42)]
                         if tempData[-1] != tempData[-2]:
+                            print("improper data.  Restarting...")
                             ser.write(b'e')
                             return 1
                     client_sock.send(result)
