@@ -24,6 +24,12 @@ try:
 
     (client_sock, address) = server_sock.accept()
 
+    def verifyDataConsistency(data):
+        for x in (data / 42):
+            tempData = data[(x * 42):((x * 42) + 42)]
+            if (tempData[-1] != tempData[-2]):
+                ser.write(b'e')
+
     def sendLIDARData(dataPacketSize):
 
         while True:
@@ -31,7 +37,7 @@ try:
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
             print("waiting to receive")
-            data = client_sock.recv(1024).decode()
+            #data = client_sock.recv(1024).decode()
 
             if data == 'stop':
                 # If the phone sends a stop command, then we need
@@ -39,16 +45,18 @@ try:
                 # command.
                 break
 
-            if data == 'restart':
-                ser.write(b'b')
-                time.sleep(2)
-                ser.write(b'e')
             ser.write(b'b')
             while True:
                 try:
                     result = ser.read(dataPacketSize)
                     ser.reset_input_buffer()
+                    for x in (data / 42):
+                        tempData = data[(x * 42):((x * 42) + 42)]
+                        if tempData[-1] != tempData[-2]:
+                            ser.write(b'e')
+                            return 1
                     client_sock.send(result)
+
                 except IndexError:
                     print('IndexError')
                     ser.write(b'e')
