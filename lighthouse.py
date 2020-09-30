@@ -24,6 +24,8 @@ try:
 
     (client_sock, address) = server_sock.accept()
 
+    ser.write(b'e')
+
     def sendLIDARData(dataPacketSize):
 
         while True:
@@ -44,12 +46,6 @@ try:
                 try:
                     result = ser.read(dataPacketSize)
                     ser.reset_input_buffer()
-                    for x in range(len(result) / 42):
-                        tempData = result[(x * 42):((x * 42) + 42)]
-                        if tempData[-1] != tempData[-2]:
-                            print("improper data.  Restarting...")
-                            ser.write(b'e')
-                            return 1
                     client_sock.send(result)
 
                 except IndexError:
