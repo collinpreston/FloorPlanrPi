@@ -30,6 +30,7 @@ try:
             ser.reset_input_buffer()
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
+            print("waiting to receive")
             data = client_sock.recv(1024).decode()
 
             if data == 'stop':
