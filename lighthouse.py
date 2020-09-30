@@ -1,5 +1,6 @@
 import bluetooth
 import serial
+import time
 
 ser = serial.Serial("/dev/serial0", baudrate=230400)
 
@@ -29,7 +30,7 @@ try:
             ser.reset_input_buffer()
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
-            # data = client_sock.recv(1024).decode()
+            data = client_sock.recv(1024).decode()
 
             if data == 'stop':
                 # If the phone sends a stop command, then we need
@@ -37,21 +38,26 @@ try:
                 # command.
                 break
 
+            if data == 'restart':
+                ser.write(b'b')
+                time.sleep(2)
+                ser.write(b'e')
             ser.write(b'b')
             while True:
                 try:
                     result = ser.read(dataPacketSize)
-                    print("read")
                     ser.reset_input_buffer()
                     client_sock.send(result)
                 except IndexError:
+                    print('IndexError')
                     ser.write(b'e')
                     # Here we will need to go back to the main while loop.
-                    # In the main loop we will check to see if we returned bacause of
+                    # In the main loop we will check to see if we returned because of
                     # the LIDAR being out of sync or it the phone sent a stop command.
                     # We will return 1 to indicate an error.
                     return 1
                 except bluetooth.btcommon.BluetoothError:
+                    print('Bluetooth disconnected or connection lost')
                     ser.write(b'e')
                     return 2
 
@@ -75,10 +81,6 @@ try:
         if lidar_execution_result == 2:
             (client_sock, address) = server_sock.accept()
             lidar_execution_result = 0
-
-        # TODO: We need to monitor the bluetooth connection.  When the connection is
-        # closed, we will need to reset the application (close the connection,
-        # go back to accepting connections).
 except KeyboardInterrupt:
     ser.write(b'e')
 
