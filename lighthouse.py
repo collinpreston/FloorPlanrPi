@@ -50,7 +50,7 @@ try:
                 try:
                     result = ser.read(dataPacketSize)
                     ser.reset_input_buffer()
-                    for x in (data / 42):
+                    for x in (len(data) / 42):
                         tempData = data[(x * 42):((x * 42) + 42)]
                         if tempData[-1] != tempData[-2]:
                             ser.write(b'e')
