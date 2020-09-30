@@ -44,8 +44,8 @@ try:
                 try:
                     result = ser.read(dataPacketSize)
                     ser.reset_input_buffer()
-                    for x in (len(data) / 42):
-                        tempData = data[(x * 42):((x * 42) + 42)]
+                    for x in (range(result / 42)):
+                        tempData = result[(x * 42):((x * 42) + 42)]
                         if tempData[-1] != tempData[-2]:
                             print("improper data.  Restarting...")
                             ser.write(b'e')
