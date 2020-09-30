@@ -24,12 +24,6 @@ try:
 
     (client_sock, address) = server_sock.accept()
 
-    def verifyDataConsistency(data):
-        for x in (data / 42):
-            tempData = data[(x * 42):((x * 42) + 42)]
-            if (tempData[-1] != tempData[-2]):
-                ser.write(b'e')
-
     def sendLIDARData(dataPacketSize):
 
         while True:
