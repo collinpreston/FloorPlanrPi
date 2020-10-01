@@ -22,6 +22,7 @@ try:
     bluetooth.advertise_service(server_sock, "raspberrypi", UUID)
 
     (client_sock, address) = server_sock.accept()
+    client_sock.setblocking(0)
 
     ser.write(b'e')
 
@@ -33,7 +34,10 @@ try:
             ser.reset_input_buffer()
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
-            data = client_sock.recv(1024).decode()
+            try:
+                data = client_sock.recv(512)
+            except client_sock.error:
+                print("no data read yet...")
 
             if data == 'stop':
                 # If the phone sends a stop command, then we need
@@ -69,8 +73,10 @@ try:
 
     # Stay connected while waiting for instructions from the phone.
     while True:
-        client_sock.setblocking(0)
-        data = client_sock.recv(1024).decode()
+        try:
+            data = client_sock.recv(512)
+        except client_sock.error:
+            print("no data read yet...")
 
         # If the sendLIDARData returned with an error, then we need
         # to call the method again.
