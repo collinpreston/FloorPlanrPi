@@ -77,7 +77,7 @@ try:
             data = client_sock.recv(512)
         except:
             print("no data read yet...")
-        data = client_sock.recv(1024).decode()
+        #data = client_sock.recv(1024).decode()
 
         # If the sendLIDARData returned with an error, then we need
         # to call the method again.
