@@ -1,6 +1,5 @@
 import bluetooth
 import serial
-import time
 
 ser = serial.Serial("/dev/serial0", baudrate=230400)
 
@@ -23,8 +22,11 @@ try:
     bluetooth.advertise_service(server_sock, "raspberrypi", UUID)
 
     (client_sock, address) = server_sock.accept()
+    client_sock.setblocking(0)
 
     ser.write(b'e')
+
+    print("Awaiting connection...")
 
     def sendLIDARData(dataPacketSize):
 
@@ -32,8 +34,7 @@ try:
             ser.reset_input_buffer()
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
-            print("waiting to receive")
-            #data = client_sock.recv(1024).decode()
+            data = client_sock.recv(1024).decode()
 
             if data == 'stop':
                 # If the phone sends a stop command, then we need
