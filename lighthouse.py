@@ -22,7 +22,6 @@ try:
     bluetooth.advertise_service(server_sock, "raspberrypi", UUID)
 
     (client_sock, address) = server_sock.accept()
-    client_sock.setblocking(0)
 
     ser.write(b'e')
 
@@ -70,6 +69,7 @@ try:
 
     # Stay connected while waiting for instructions from the phone.
     while True:
+        client_sock.setblocking(0)
         data = client_sock.recv(1024).decode()
 
         # If the sendLIDARData returned with an error, then we need
