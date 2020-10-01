@@ -35,8 +35,10 @@ try:
             ser.reset_input_buffer()
             # Here we need to check to make sure that the phone
             # has not sent a stop command.
-            data = client_sock.recv(512)
-            time.sleep(1)
+            try:
+                data = client_sock.recv(1024).decode()
+            except bluetooth.btcommon.BluetoothError:
+                print("Nothing to read.")
 
             if data == 'stop':
                 # If the phone sends a stop command, then we need
@@ -60,7 +62,7 @@ try:
                     # We will return 1 to indicate an error.
                     return 1
                 except bluetooth.btcommon.BluetoothError:
-                    print('Bluetooth disconnected or connection lost')
+                    print('Bluetooth disconnected or connection lost...')
                     ser.write(b'e')
                     return 2
 
@@ -72,8 +74,10 @@ try:
 
     # Stay connected while waiting for instructions from the phone.
     while True:
-        data = client_sock.recv(1024).decode()
-        time.sleep(1)
+        try:
+            data = client_sock.recv(1024).decode()
+        except bluetooth.btcommon.BluetoothError:
+            print("Nothing to read.")
 
         # If the sendLIDARData returned with an error, then we need
         # to call the method again.
