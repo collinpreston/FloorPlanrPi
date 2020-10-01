@@ -38,6 +38,7 @@ try:
             try:
                 data = client_sock.recv(1024).decode()
             except bluetooth.btcommon.BluetoothError:
+                data = ""
                 print("Nothing to read.")
 
             if data == 'stop':
@@ -77,6 +78,7 @@ try:
         try:
             data = client_sock.recv(1024).decode()
         except bluetooth.btcommon.BluetoothError:
+            data = ""
             print("Nothing to read.")
 
         # If the sendLIDARData returned with an error, then we need
