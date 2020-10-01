@@ -36,7 +36,7 @@ try:
             # has not sent a stop command.
             try:
                 data = client_sock.recv(512)
-            except client_sock.error:
+            except:
                 print("no data read yet...")
 
             if data == 'stop':
@@ -75,8 +75,9 @@ try:
     while True:
         try:
             data = client_sock.recv(512)
-        except client_sock.error:
+        except:
             print("no data read yet...")
+        data = client_sock.recv(1024).decode()
 
         # If the sendLIDARData returned with an error, then we need
         # to call the method again.
