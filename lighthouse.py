@@ -37,6 +37,7 @@ try:
             try:
                 data = client_sock.recv(512)
             except:
+                data = ""
                 print("no data read yet...")
 
             if data == 'stop':
@@ -76,6 +77,7 @@ try:
         try:
             data = client_sock.recv(512)
         except:
+            data  = ""
             print("no data read yet...")
         #data = client_sock.recv(1024).decode()
 
