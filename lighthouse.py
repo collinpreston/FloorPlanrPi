@@ -30,25 +30,20 @@ try:
     print("Awaiting connection...")
 
     def sendLIDARData(dataPacketSize):
-
-        while True:
-            ser.reset_input_buffer()
-            # Here we need to check to make sure that the phone
-            # has not sent a stop command.
-            try:
-                data = client_sock.recv(1024).decode()
-            except bluetooth.btcommon.BluetoothError:
-                data = ""
-                print("Nothing to read.")
-
-            if data == 'stop':
-                # If the phone sends a stop command, then we need
-                # to break the loop and go back to listening for a start
-                # command.
-                break
-
             ser.write(b'b')
             while True:
+                try:
+                    data = client_sock.recv(1024).decode()
+                except bluetooth.btcommon.BluetoothError:
+                    data = ""
+                    print("Nothing to read.")
+
+                if data == 'stop':
+                    # If the phone sends a stop command, then we need
+                    # to break the loop and go back to listening for a start
+                    # command.
+                    return 0
+
                 try:
                     result = ser.read(dataPacketSize)
                     ser.reset_input_buffer()
@@ -66,10 +61,6 @@ try:
                     print('Bluetooth disconnected or connection lost...')
                     ser.write(b'e')
                     return 2
-
-        # Here we return with 0 to indicate that the method did not throw any errors.
-        # This means that we are returning because the phone sent a stop command.
-        return 0
 
     lidar_execution_result = 0
 
