@@ -21,7 +21,6 @@ try:
     bluetooth.advertise_service(server_sock, "raspberrypi", UUID)
 
     (client_sock, address) = server_sock.accept()
-    client_sock.setblocking(False)
 
     ser.write(b'e')
 
@@ -95,6 +94,7 @@ try:
         if lidar_execution_result == 2:
             print("waiting for bluetooth device to connect...")
             (client_sock, address) = server_sock.accept()
+            client_sock.setblocking(False)
             lidar_execution_result = 0
 except KeyboardInterrupt:
     ser.write(b'e')
