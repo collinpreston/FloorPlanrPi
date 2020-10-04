@@ -47,6 +47,7 @@ try:
                 # to break the loop and go back to listening for a start
                 # command.
                 print("stop command received!")
+                ser.write(b'e')
                 break
 
             try:
