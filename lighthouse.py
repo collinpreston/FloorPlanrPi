@@ -29,8 +29,11 @@ try:
 
 
     def sendLIDARData(dataPacketSize):
+        ser.reset_input_buffer()
+
+        print("Starting LiDAR")
+        ser.write(b'b')
         while True:
-            ser.reset_input_buffer()
             try:
                 print("reading from bluetooth...")
                 data = client_sock.recv(1024).decode()
@@ -46,31 +49,28 @@ try:
                 print("stop command received!")
                 break
 
-            print("Starting LiDAR")
-            ser.write(b'b')
-            while True:
-                try:
-                    print("reading data from LiDAR...")
-                    result = ser.read(dataPacketSize)
-                    print("read data from LiDAR.")
-                    ser.reset_input_buffer()
+            try:
+                print("reading data from LiDAR...")
+                result = ser.read(dataPacketSize)
+                print("read data from LiDAR.")
+                ser.reset_input_buffer()
 
-                    print("sending data to bluetooth...")
-                    client_sock.send(result)
-                    print("sent data to bluetooth")
+                print("sending data to bluetooth...")
+                client_sock.send(result)
+                print("sent data to bluetooth")
 
-                except IndexError:
-                    print('IndexError')
-                    ser.write(b'e')
-                    # Here we will need to go back to the main while loop.
-                    # In the main loop we will check to see if we returned because of
-                    # the LIDAR being out of sync or it the phone sent a stop command.
-                    # We will return 1 to indicate an error.
-                    return 1
-                except bluetooth.btcommon.BluetoothError:
-                    print('Bluetooth disconnected or connection lost...')
-                    ser.write(b'e')
-                    return 2
+            except IndexError:
+                print('IndexError')
+                ser.write(b'e')
+                # Here we will need to go back to the main while loop.
+                # In the main loop we will check to see if we returned because of
+                # the LIDAR being out of sync or it the phone sent a stop command.
+                # We will return 1 to indicate an error.
+                return 1
+            except bluetooth.btcommon.BluetoothError:
+                print('Bluetooth disconnected or connection lost...')
+                ser.write(b'e')
+                return 2
         return 0
 
     lidar_execution_result = 0
