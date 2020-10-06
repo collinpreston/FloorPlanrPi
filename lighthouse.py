@@ -69,7 +69,8 @@ try:
                 # We will return 1 to indicate an error.
                 return 1
             except bluetooth.btcommon.BluetoothError as e:
-                if (e.errno == "104"):
+                print(e.errno)
+                if e.errno == "104":
                     # print('Bluetooth disconnected or connection lost...')
                     ser.write(b'e')
                     return 2
