@@ -68,7 +68,8 @@ try:
                 # the LIDAR being out of sync or it the phone sent a stop command.
                 # We will return 1 to indicate an error.
                 return 1
-            except bluetooth.btcommon.BluetoothError:
+            except bluetooth.btcommon.BluetoothError as e:
+                print(e)
                 #print('Bluetooth disconnected or connection lost...')
                 ser.write(b'e')
                 return 2
