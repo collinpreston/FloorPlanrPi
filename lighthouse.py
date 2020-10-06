@@ -69,7 +69,7 @@ try:
                 # We will return 1 to indicate an error.
                 return 1
             except bluetooth.btcommon.BluetoothError as e:
-                print(type(e).__name__)
+                print(e.errno)
                 if (type(e).__name__ == "[Errno 104] Connection reset by peer)"):
                     # print('Bluetooth disconnected or connection lost...')
                     ser.write(b'e')
