@@ -69,10 +69,10 @@ try:
                 # We will return 1 to indicate an error.
                 return 1
             except bluetooth.btcommon.BluetoothError as e:
-                print(e)
-                #print('Bluetooth disconnected or connection lost...')
-                ser.write(b'e')
-                return 2
+                if (e == "[Errno 104] Connection reset by peer)"):
+                    # print('Bluetooth disconnected or connection lost...')
+                    ser.write(b'e')
+                    return 2
         return 0
 
     lidar_execution_result = 0
