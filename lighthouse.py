@@ -23,7 +23,6 @@ try:
 
     (client_sock, address) = server_sock.accept()
     client_sock.setblocking(False)
-
     ser.write(b'e')
 
     print("Awaiting connection...")
@@ -71,7 +70,7 @@ try:
             except bluetooth.btcommon.BluetoothError as e:
                 print(e.errno)
                 if e.errno == 104:
-                     print('Bluetooth disconnected or connection lost...')
+                    print('Bluetooth disconnected or connection lost...')
                     ser.write(b'e')
                     return 2
         return 0
