@@ -31,37 +31,37 @@ try:
 
     def sendLIDARData(dataPacketSize):
 
-        #print("Starting LiDAR")
+        print("Starting LiDAR")
         ser.write(b'b')
         while True:
             try:
-                #print("reading from bluetooth...")
+                print("reading from bluetooth...")
                 data = client_sock.recv(1024).decode()
-                #print("read from bluetooth...")
+                print("read from bluetooth...")
             except bluetooth.btcommon.BluetoothError:
                 data = ""
-                #print("Nothing to read.")
+                print("Nothing to read.")
 
             if data == 'stop':
                 # If the phone sends a stop command, then we need
                 # to break the loop and go back to listening for a start
                 # command.
-                #print("stop command received!")
+                print("stop command received!")
                 ser.write(b'e')
                 break
 
             try:
                 ser.reset_input_buffer()
-                #print("reading data from LiDAR...")
+                print("reading data from LiDAR...")
                 result = ser.read(dataPacketSize)
-                #print("read data from LiDAR.")
+                print("read data from LiDAR.")
 
-                #print("sending data to bluetooth...")
+                print("sending data to bluetooth...")
                 client_sock.send(result)
-                #print("sent data to bluetooth")
+                print("sent data to bluetooth")
 
             except IndexError:
-                #print('IndexError')
+                print('IndexError')
                 ser.write(b'e')
                 # Here we will need to go back to the main while loop.
                 # In the main loop we will check to see if we returned because of
@@ -71,7 +71,7 @@ try:
             except bluetooth.btcommon.BluetoothError as e:
                 print(e.errno)
                 if e.errno == 104:
-                    # print('Bluetooth disconnected or connection lost...')
+                     print('Bluetooth disconnected or connection lost...')
                     ser.write(b'e')
                     return 2
         return 0
@@ -81,12 +81,12 @@ try:
     # Stay connected while waiting for instructions from the phone.
     while True:
         try:
-            #print("reading from bluetooth...")
+            print("reading from bluetooth...")
             data = client_sock.recv(1024).decode()
-            #print("read from bluetooth.")
+            print("read from bluetooth.")
         except bluetooth.btcommon.BluetoothError:
             data = ""
-            #print("Nothing to read.")
+            print("Nothing to read.")
 
         # If the sendLIDARData returned with an error, then we need
         # to call the method again.
@@ -96,7 +96,7 @@ try:
             lidar_execution_result = sendLIDARData(int(data[5:]))
 
         if lidar_execution_result == 2:
-            #print("waiting for bluetooth device to connect...")
+            print("waiting for bluetooth device to connect...")
             (client_sock, address) = server_sock.accept()
             client_sock.setblocking(False)
             lidar_execution_result = 0
